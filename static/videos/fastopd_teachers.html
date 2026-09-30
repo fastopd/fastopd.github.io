@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FastOPD Teachers Animation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #fff; padding: 40px 16px; }
+</style>
+</head>
+<body>
+
+<!-- ===================== FastOPD teacher → student animation (copy from here) ===================== -->
+<section class="fopd-anim" aria-label="FastOPD distills diverse foundation policies into one lightweight student">
+<style>
+  .fopd-anim {
+    --fopd-purple: #7B2FF7;
+    --fopd-ink: #1d1d1f;
+    --fopd-mute: #6b6b76;
+    max-width: 1000px; margin: 0 auto; color: var(--fopd-ink);
+    font-family: "Google Sans", "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .fopd-anim svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .fopd-anim svg text { font-family: inherit; }
+  .fopd-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 0 0 18px; padding: 0; list-style: none; }
+  .fopd-chip {
+    position: relative; overflow: hidden; cursor: pointer;
+    font: inherit; font-size: 15px; line-height: 1; color: var(--fopd-mute);
+    background: #fff; border: 1.5px solid #d9d9e0; border-radius: 999px;
+    padding: 9px 16px 10px; display: inline-flex; align-items: center; gap: 8px;
+    transition: color .25s, border-color .25s, background-color .25s;
+  }
+  .fopd-chip b { font-weight: 600; }
+  .fopd-chip .fopd-type { font-size: 11px; font-weight: 700; letter-spacing: .04em; padding: 3px 6px; border-radius: 6px; background: #f0f0f4; color: #7a7a86; }
+  .fopd-chip .fopd-bar { position: absolute; left: 0; bottom: 0; height: 3px; width: 0; background: var(--fopd-purple); opacity: .85; }
+  .fopd-chip.is-active { color: var(--fopd-ink); border-color: var(--fopd-purple); background: #f6f1ff; }
+  .fopd-chip.is-active .fopd-type.vla { background: #e7e1ff; color: #5b3db5; }
+  .fopd-chip.is-active .fopd-type.wam { background: #ffe6d3; color: #a2531a; }
+  .fopd-chip:focus-visible { outline: 2px solid var(--fopd-purple); outline-offset: 2px; }
+  .fopd-cap { text-align: center; font-size: 17px; line-height: 1.5; margin: 14px auto 0; min-height: 3em; max-width: 820px; transition: opacity .35s; }
+  .fopd-cap .fopd-bench { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--fopd-mute); border: 1px solid #d9d9e0; border-radius: 6px; padding: 2px 7px; margin-right: 8px; vertical-align: 2px; }
+  .fopd-cap b { color: var(--fopd-purple); font-weight: 700; }
+  @media (max-width: 600px) { .fopd-chip { font-size: 13px; padding: 7px 12px 8px; } .fopd-cap { font-size: 15px; } }
+</style>
+
+  <div class="fopd-chips" role="tablist"></div>
+
+  <svg viewBox="0 0 1000 236" role="img" aria-label="Teacher policy distilled by FastOPD into a 451M-parameter student">
+    <defs>
+      <filter id="fopd-glow" x="-30%" y="-40%" width="160%" height="180%">
+        <feGaussianBlur stdDeviation="10"/>
+      </filter>
+      <marker id="fopd-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="#1d1d1f"/>
+      </marker>
+    </defs>
+
+    <g class="fopd-stage">
+    <!-- section labels -->
+    <text class="t-lbl" x="528" y="16" text-anchor="end" font-size="12" font-weight="700" letter-spacing="1.2" fill="#8a8a96">FOUNDATION POLICY (TEACHER)</text>
+    <text x="700" y="44" font-size="12" font-weight="700" letter-spacing="1.2" fill="#8a8a96">LIGHTWEIGHT STUDENT</text>
+
+    <!-- teacher -->
+    <g class="t-box">
+      <rect class="t-outer" y="28" height="180" rx="18" fill="#fff" stroke="#1d1d1f" stroke-width="1.6"/>
+      <g class="t-content">
+        <rect class="t-pill" y="46" width="48" height="24" rx="7"/>
+        <text class="t-pilltxt" y="63" text-anchor="middle" font-size="12" font-weight="700" letter-spacing=".6"></text>
+        <text class="t-name" y="66" font-size="22"></text>
+        <rect class="t-bb" y="88" height="104" rx="12" stroke="#1d1d1f" stroke-width="1.3"/>
+        <text class="t-bbtxt" y="134" text-anchor="middle" font-size="17" font-weight="500"></text>
+        <rect class="t-ae" y="88" height="104" rx="12" fill="#D2E4FD" stroke="#1d1d1f" stroke-width="1.3"/>
+        <text class="t-aetxt" y="134" text-anchor="middle" font-size="17" font-weight="500"><tspan>Action</tspan><tspan dy="21">Expert</tspan></text>
+      </g>
+    </g>
+
+    <!-- FastOPD arrow -->
+    <text x="620" y="104" text-anchor="middle" font-size="19" font-weight="700">FastOPD</text>
+    <line x1="548" y1="118" x2="684" y2="118" stroke="#1d1d1f" stroke-width="3" marker-end="url(#fopd-head)"/>
+    <g class="a-dots"></g>
+    <text class="a-ratio" x="620" y="148" text-anchor="middle" font-size="16" fill="#3a3a44"></text>
+
+    <!-- student -->
+    <rect class="s-glow" x="700" y="56" width="276" height="124" rx="16" fill="#7B2FF7" filter="url(#fopd-glow)" opacity="0"/>
+    <rect class="s-outer" x="700" y="56" width="276" height="124" rx="16" fill="#fff" stroke="#1d1d1f" stroke-width="1.6"/>
+    <text x="716" y="84" font-size="18"><tspan font-weight="700">Ours</tspan><tspan fill="#6b6b76" font-size="15"> (451M)</tspan></text>
+    <text class="s-steps" x="960" y="83" text-anchor="end" font-size="12" font-weight="700" fill="#7B2FF7"></text>
+    <rect x="714" y="98" width="156" height="68" rx="10" fill="#DDD8FF" stroke="#1d1d1f" stroke-width="1.2"/>
+    <text x="792" y="120" text-anchor="middle" font-size="13.5" font-weight="500"><tspan x="792">Vision-Language</tspan><tspan x="792" dy="17">Model</tspan><tspan x="792" dy="17" font-size="12" fill="#55555f">350M</tspan></text>
+    <rect x="878" y="98" width="84" height="68" rx="10" fill="#D2E4FD" stroke="#1d1d1f" stroke-width="1.2"/>
+    <text x="920" y="120" text-anchor="middle" font-size="13.5" font-weight="500"><tspan x="920">Action</tspan><tspan x="920" dy="17">Expert</tspan><tspan x="920" dy="17" font-size="12" fill="#55555f">101M</tspan></text>
+    </g>
+  </svg>
+
+  <p class="fopd-cap" aria-live="polite"></p>
+
+<script>
+(function () {
+  var root = document.currentScript.closest('.fopd-anim');
+  var STUDENT = 0.451; // B params
+  var TEACHERS = [
+    { chip: 'π<sub>0.5</sub>', name: ['π', '0.5'], params: 3.3, type: 'VLA', bench: 'LIBERO', steps: '2 steps',
+      bb: ['Vision-Language', 'Model'],
+      cap: '<span class="fopd-bench">LIBERO</span>Retains <b>84%</b> of π<sub>0.5</sub>’s success rate with only <b>2 steps</b>, at <b>78%</b> lower latency.' },
+    { chip: 'LingBot-VLA', name: ['LingBot-VLA'], params: 4.2, type: 'VLA', bench: 'RoboTwin 2.0', steps: '1 step',
+      bb: ['Vision-Language', 'Model'],
+      cap: '<span class="fopd-bench">RoboTwin 2.0</span><b>+15.9 pp</b> over the base student at <b>1 step</b>, running <b>10×</b> faster than the teacher.' },
+    { chip: 'Fast-WAM', name: ['Fast-WAM'], params: 6.0, type: 'WAM', bench: 'RoboTwin 2.0', steps: '1 step',
+      bb: ['Video DiT'],
+      cap: '<span class="fopd-bench">RoboTwin 2.0</span>Also works for a World Action Model: <b>+15.2 pp</b> over the base student at <b>1 step</b>.' },
+    { chip: 'MolmoAct2', name: ['MolmoAct2'], params: 5.0, type: 'VLA', bench: 'Real robot', steps: '4 steps',
+      bb: ['Vision-Language', 'Model'],
+      cap: '<span class="fopd-bench">Real robot</span><b>50%</b> success with <b>4 steps</b> vs. 44% for the 10 steps base student, finishing <b>1.9s</b> faster.' }
+  ];
+  var CYCLE = 4600, N = TEACHERS.length, RIGHT = 528;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var NS = 'http://www.w3.org/2000/svg';
+  var q = function (s) { return root.querySelector(s); };
+
+  // chips
+  var chipsEl = q('.fopd-chips'), chips = [];
+  TEACHERS.forEach(function (t, i) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'fopd-chip'; b.setAttribute('role', 'tab');
+    b.innerHTML = '<span class="fopd-type ' + t.type.toLowerCase() + '">' + t.type + '</span><b>' + t.chip + '</b><span class="fopd-bar"></span>';
+    b.addEventListener('click', function () { jump(i); });
+    chipsEl.appendChild(b); chips.push(b);
+  });
+
+  // dots on the arrow
+  var dotsG = q('.a-dots'), dots = [];
+  for (var d = 0; d < 7; d++) {
+    var c = document.createElementNS(NS, 'circle');
+    c.setAttribute('r', 5); c.setAttribute('cy', 118); c.setAttribute('fill', '#7B2FF7'); c.setAttribute('opacity', 0);
+    dotsG.appendChild(c); dots.push(c);
+  }
+
+  var el = {
+    lbl: q('.t-lbl'), outer: q('.t-outer'), content: q('.t-content'), pill: q('.t-pill'), pilltxt: q('.t-pilltxt'),
+    name: q('.t-name'), bb: q('.t-bb'), bbtxt: q('.t-bbtxt'), ae: q('.t-ae'), aetxt: q('.t-aetxt'),
+    stage: q('.fopd-stage'), ratio: q('.a-ratio'), glow: q('.s-glow'), sOuter: q('.s-outer'), steps: q('.s-steps'), cap: q('.fopd-cap')
+  };
+
+  function width(p) { return 330 + (p - 3.3) / (6 - 3.3) * 130; }
+  function ease(x) { x = Math.max(0, Math.min(1, x)); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+  function clamp(x) { return Math.max(0, Math.min(1, x)); }
+  function mix(a, b, t) { return a + (b - a) * t; }
+  function hexMix(a, b, t) {
+    var pa = [1, 3, 5].map(function (k) { return parseInt(a.substr(k, 2), 16); });
+    var pb = [1, 3, 5].map(function (k) { return parseInt(b.substr(k, 2), 16); });
+    return 'rgb(' + pa.map(function (v, k) { return Math.round(mix(v, pb[k], t)); }).join(',') + ')';
+  }
+
+  var shownIdx = -1, capIdx = -1;
+  function setTeacherContent(t) {
+    var n = el.name;
+    while (n.firstChild) n.removeChild(n.firstChild);
+    var a = document.createElementNS(NS, 'tspan'); a.setAttribute('font-weight', 700); a.textContent = t.name[0]; n.appendChild(a);
+    var tail = 0;
+    if (t.name[1]) {
+      var s = document.createElementNS(NS, 'tspan'); s.setAttribute('font-weight', 700); s.setAttribute('font-size', 15); s.setAttribute('dy', 5); s.textContent = t.name[1]; n.appendChild(s); tail = -5;
+    }
+    var p = document.createElementNS(NS, 'tspan'); p.setAttribute('fill', '#6b6b76'); p.setAttribute('font-size', 16);
+    if (tail) p.setAttribute('dy', tail);
+    p.textContent = ' (' + t.params.toFixed(1).replace('.0', '') + 'B)'; n.appendChild(p);
+    el.pilltxt.textContent = t.type;
+    var wam = t.type === 'WAM';
+    el.pill.setAttribute('fill', wam ? '#FFE6D3' : '#E7E1FF');
+    el.pilltxt.setAttribute('fill', wam ? '#A2531A' : '#5B3DB5');
+    el.bb.setAttribute('fill', wam ? '#FFE3CC' : '#DDD8FF');
+    el.bbtxt.innerHTML = '';
+    t.bb.forEach(function (line, k) {
+      var ts = document.createElementNS(NS, 'tspan'); ts.textContent = line; if (k) ts.setAttribute('dy', 21); el.bbtxt.appendChild(ts);
+    });
+    // centre the label vertically whether it has one line or two
+    el.bbtxt.setAttribute('y', 134 + (2 - t.bb.length) * 10.5);
+    el.steps.textContent = t.steps.toUpperCase();
+  }
+
+  function layoutTeacher(W) {
+    var x = RIGHT - W;
+    // keep the teacher → student group centred as the teacher box resizes (student ends at x = 976)
+    el.stage.setAttribute('transform', 'translate(' + (500 - (x + 976) / 2) + ',0)');
+    el.outer.setAttribute('x', x); el.outer.setAttribute('width', W);
+    el.lbl.setAttribute('x', RIGHT);
+    el.pill.setAttribute('x', x + 18); el.pilltxt.setAttribute('x', x + 42);
+    el.name.setAttribute('x', x + 78);
+    var inner = W - 32 - 12, bw = inner * 0.66, aw = inner - bw;
+    el.bb.setAttribute('x', x + 16); el.bb.setAttribute('width', bw);
+    el.ae.setAttribute('x', x + 16 + bw + 12); el.ae.setAttribute('width', aw);
+    var bcx = x + 16 + bw / 2, acx = x + 16 + bw + 12 + aw / 2;
+    [].forEach.call(el.bbtxt.childNodes, function (ts) { ts.setAttribute('x', bcx); });
+    el.bbtxt.setAttribute('x', bcx);
+    [].forEach.call(el.aetxt.childNodes, function (ts) { ts.setAttribute('x', acx); });
+    el.aetxt.setAttribute('x', acx);
+  }
+
+  function render(T) {
+    var k = Math.floor(T / CYCLE), idx = ((k % N) + N) % N, u = T - k * CYCLE;
+    var prev = k === 0 ? idx : (idx - 1 + N) % N;
+    var cur = TEACHERS[idx], pre = TEACHERS[prev];
+    if (reduce) u = Math.max(u, 2400);
+
+    // teacher: fade out old content, resize, fade in new
+    var showIdx = (u < 260 && prev !== idx) ? prev : idx;
+    if (showIdx !== shownIdx) { setTeacherContent(TEACHERS[showIdx]); shownIdx = showIdx; }
+    var op = prev !== idx ? (u < 260 ? 1 - u / 260 : clamp((u - 420) / 300)) : clamp(u / 400);
+    el.content.setAttribute('opacity', op);
+    layoutTeacher(mix(width(pre.params), width(cur.params), ease((u - 150) / 550)));
+
+    // knowledge flowing along the arrow
+    for (var i = 0; i < dots.length; i++) {
+      var p = (u - 650 - i * 95) / 620;
+      var vis = p > 0 && p < 1;
+      dots[i].setAttribute('cx', mix(552, 676, ease(p)));
+      dots[i].setAttribute('opacity', vis ? Math.sin(Math.PI * p) : 0);
+    }
+
+    // student lights up when knowledge arrives
+    var g = clamp((u - 1150) / 300) * (1 - clamp((u - 1900) / 1100));
+    el.glow.setAttribute('opacity', 0.35 * g);
+    el.sOuter.setAttribute('stroke', hexMix('#1d1d1f', '#7B2FF7', g));
+    el.sOuter.setAttribute('stroke-width', 1.6 + 1.4 * g);
+    el.steps.setAttribute('opacity', prev !== idx ? (u < 260 ? 1 - u / 260 : clamp((u - 1300) / 300)) : clamp((u - 1300) / 300));
+
+    // size ratio counter
+    var r0 = pre.params / STUDENT, r1 = cur.params / STUDENT;
+    var r = prev === idx ? r1 : mix(r0, r1, ease((u - 300) / 600));
+    el.ratio.innerHTML = '<tspan font-weight="700" fill="#7B2FF7">' + r.toFixed(1) + '×</tspan> smaller';
+
+    // chips
+    chips.forEach(function (c, j) {
+      var on = j === idx;
+      if (c.classList.contains('is-active') !== on) { c.classList.toggle('is-active', on); c.setAttribute('aria-selected', on); }
+      c.lastChild.style.width = on ? (100 * u / CYCLE) + '%' : '0';
+    });
+
+    // caption
+    var capShow = u < 1150 && prev !== idx ? prev : idx;
+    if (capShow !== capIdx) { el.cap.innerHTML = TEACHERS[capShow].cap; capIdx = capShow; }
+    el.cap.style.transition = 'none';
+    el.cap.style.opacity = prev !== idx ? (u < 350 ? 1 - u / 350 : u < 1150 ? 0 : clamp((u - 1150) / 400)) : clamp((u - 1150) / 400);
+  }
+
+  // clock
+  var offset = 0, start = null, paused = false, pausedAt = 0, visible = true, seekMode = false;
+  function now() { return performance.now(); }
+  function T() { return paused ? pausedAt : now() - start + offset; }
+  function jump(i) { offset = i * CYCLE; start = now(); if (paused) pausedAt = offset; if (i === 0) offset = N * CYCLE; }
+  function loop() { if (!seekMode && visible) render(T()); requestAnimationFrame(loop); }
+  start = now();
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting && !visible) { start = now(); offset = pausedAt; paused = false; }
+        if (!e.isIntersecting && visible) { pausedAt = T(); paused = true; }
+        visible = e.isIntersecting;
+      });
+    }).observe(root);
+  }
+  render(0);
+  requestAnimationFrame(loop);
+  // for offline frame capture: window.__fopdSeek(ms)
+  window.__fopdSeek = function (ms) { seekMode = true; render(ms); };
+})();
+</script>
+</section>
+<!-- ===================== (copy to here) ===================== -->
+
+</body>
+</html>
