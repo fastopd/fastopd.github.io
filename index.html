@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FastOPD transfers foundation robot policies into lightweight, few-step students through efficient on-policy distillation.">
+  <meta property="og:title" content="FastOPD: On-Policy Distillation for Lightweight VLA Deployment">
+  <meta property="og:description" content="Foundation policies. Lightweight deployment. Efficient on-policy distillation for few-step robot control.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fastopd.github.io/">
+  <meta property="og:image" content="https://fastopd.github.io/static/images/teaser_poster.jpg">
+  <meta name="theme-color" content="#ffffff">
+  <title>FastOPD: On-Policy Distillation for Lightweight VLA Deployment</title>
+  <link rel="stylesheet" href="static/css/index.css">
+  <script src="static/js/index.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" defer onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+<a class="skip-link" href="#abstract">Skip to content</a>
+<nav class="section-nav" aria-label="Sections">
+  <a href="#abstract">Abstract</a>
+  <a href="#motivation">Motivation</a>
+  <a href="#method">Method</a>
+  <a href="#results">Results</a>
+  <a href="#real-world">Real-World</a>
+</nav>
+<header class="publication-header container">
+  <!-- <p class="eyebrow">FOUNDATION-TO-LIGHTWEIGHT ROBOT POLICIES</p> -->
+  <h1>
+    <span class="project-name">FastOPD</span>
+    <span class="paper-title">On-Policy Distillation for Lightweight VLA Deployment</span>
+  </h1>
+  <div class="authors">
+    <span><a href="https://finallyupper.github.io/">Yoojin Oh</a><sup>*</sup>,</span>
+    <span><a href="https://www.jeongsol.dev/">Jeongsol Kim</a><sup>*</sup>,</span>
+    <span><a href="https://yws0322.github.io/">Yeonwoo Seo</a><sup></sup>,</span>
+    <span><a href="https://sites.google.com/view/janghopark/">Jangho Park</a><sup></sup>,</span>
+    <span><a href="https://jinotter3.github.io/">Seonghyun Jin</a><sup></sup>,</span>
+    <br class="desktop-break">
+    <span>Sunwoo Park<sup></sup>,</span>
+    <span><a href="https://ggred0123.github.io/">Youngmin Kim</a><sup></sup>,</span>
+    <span><a href="https://youngjun-jun.github.io/">Youngjun Jun</a><sup></sup>,</span>
+    <span>Kyumin Choi<sup></sup>,</span>
+    <span><a href="https://bispl-website.github.io/professor/">Jong Chul Ye</a><sup></sup></span>
+  </div>
+  <p class="affiliations"><span>KAIST</span></p>
+  <p class="contribution">* Equal contribution</p>
+  <nav class="publication-links" aria-label="Paper resources">
+    <a class="button" href="static/papers/2610.02832v1.pdf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"/></svg>Paper</a>
+    <a class="button" href="https://arxiv.org/abs/2610.02832"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 3 14 18M7 3l12 14M17 3 7 21"/></svg>arXiv</a>
+    <span class="button coming-soon" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" stroke="none" d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 .1.88 2.18 3.28 1.5.1-.72.39-1.21.71-1.49-2.5-.28-5.12-1.25-5.12-5.56 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.43.11-2.98 0 0 .95-.3 3.1 1.15a10.8 10.8 0 0 1 5.64 0c2.15-1.45 3.09-1.15 3.09-1.15.61 1.55.23 2.7.11 2.98.73.79 1.16 1.79 1.16 3.02 0 4.32-2.63 5.28-5.14 5.56.4.35.76 1.03.76 2.08v3.12c0 .3.2.65.77.54A11.25 11.25 0 0 0 12 .75Z"/></svg>Code (TBA)</span>
+  </nav>
+</header>
+<main>
+  <section class="teaser container" id="tldr" aria-label="FastOPD overview">
+    <div class="reel" id="reel">
+      <video id="reel-video" src="static/videos/teaser.mp4" poster="static/images/teaser_poster.jpg" autoplay loop muted playsinline disablepictureinpicture preload="auto"
+        aria-label="FastOPD overview: a foundation-to-lightweight VLA framework. Efficient on-policy distillation with teacher supervision at a single sampled state, distilling π0.5, LingBot-VLA, Fast-WAM and MolmoAct2 into a 451M few-step student, deployed on a real robot"></video>
+      <div class="reel-bar">
+        <button class="reel-btn" id="reel-play" type="button" aria-label="Pause">
+          <svg id="reel-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+        </button>
+        <div class="reel-seek" id="reel-seek" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="reel-track"><div class="reel-fill" id="reel-fill"></div></div>
+        </div>
+        <span class="reel-time" id="reel-time">0:00</span>
+      </div>
+    </div>
+    <p class="tagline"><strong class="tldr">TL;DR</strong> FastOPD distills large foundation policies <span class="param-count">(&gt;3B)</span> into a compact, few-step student <span class="param-count">(451M)</span> using teacher supervision at only a single on-policy state per trajectory, enabling efficient training and deployment across foundation VLAs and a World Action Model.</p>
+  </section>
+
+  <section class="section soft" id="abstract">
+    <div class="container reading-width">
+      <h2>Abstract</h2>
+      <p>Vision-Language-Action (VLA) foundation models have scaled rapidly to enhance manipulation performance and generalizability, but this scaling incurs high computational costs that render real-world deployment increasingly challenging. Existing approaches typically mitigate this issue by designing smaller architectures or reducing the iterative denoising steps in flow-based policies.</p>
+      <p>In this work, we propose <strong>FastOPD</strong>, a foundation-to-lightweight VLA framework that enables the practical deployment of large-scale VLAs through efficient on-policy distillation. Specifically, FastOPD adapts a flow map for single-state teacher supervision and combines it with a self-consistency objective to construct a compact student that learns the teacher dynamics. Furthermore, we theoretically demonstrate that minimizing this objective allows the distilled student to recover a distribution on par with that induced by an ideal few-step teacher model.</p>
+      <p>We evaluate FastOPD across diverse foundation policies in simulation and real-world experiments. On LIBERO, FastOPD retains 84% of the performance of π<sub>0.5</sub> with only two inference steps, reducing inference latency by 78.1% while outperforming existing few-step distillation baselines in average success rate. With LingBot-VLA as the teacher, FastOPD improves the single-step success rate over the base student by 15.9 percentage points on RoboTwin 2.0. We further demonstrate its applicability to a World Action Model (WAM) and deploy a compact student distilled from MolmoAct2 on a real robot.</p>
+    </div>
+  </section>
+
+  <section class="section container" id="motivation">
+    <h2>Motivation</h2>
+    <p class="tagline tagline-question"><strong>How can we apply on-policy distillation in an efficient manner?</strong></p>
+    <div class="motivation-grid">
+      <figure>
+        <img src="static/images/fig2_left_v2.png" width="2000" height="1125" loading="lazy" alt="On-policy distillation: the student rolls out a multi-step trajectory from noise and the teacher velocity is queried at every intermediate state.">
+        <figcaption>(a)</figcaption>
+      </figure>
+      <figure>
+        <img src="static/images/fig2_right_v2.png" width="2000" height="1125" loading="lazy" alt="FastOPD: the student jumps directly from noise to an intermediate state and the teacher velocity is queried only at that single state.">
+        <figcaption>(b)</figcaption>
+      </figure>
+    </div>
+    <p class="motivation-note"><strong>(a) Conventional OPD</strong> evaluates the teacher at <strong>every</strong> denoising step, resulting in substantial computational overhead.<br>
+                                <strong>(b) FastOPD</strong> evaluates teacher at a <strong>single</strong> sampled state reached by a flow-map jump from noise.</p>
+    <br><br>
+    <h2 id="method">Method</h2>
+                                <figure>
+      <img src="static/images/method_figure_v3.png" width="3142" height="1384" loading="lazy" alt="FastOPD overview: (a) flow map architecture with a 350M vision-language model, a 102M action expert with a time projection layer conditioned on s and t; (b) on-policy flow map distillation loss matching the student velocity to the teacher velocity at a state reached by a single jump from noise; (c) self-consistency loss aligning a direct jump with two shorter steps through a midpoint.">
+    </figure>
+    <p class="motivation-note">To match the teacher only at sampled on-policy states and propagate this local velocity supervision to finite-step flow maps, we combine <strong>On-Policy Flow map Distillation (OPFD) loss</strong> with <strong>Self-Consistency (SC) loss</strong>. 
+                                We freeze the VLM backbone and fine-tune only the action expert with additional time projection layer.</p>
+    <!-- <p class="motivation-note"><strong>On-policy flow map distillation.</strong> <br>
+                                <strong>Finite-interval self-consistency.</strong> <br>
+                                <strong>Flow map architecture.</strong> The student pairs a compact vision-language model (350M) with a lightweight action expert (100M). A time projection \(\psi(\cdot)\) conditions the action expert on both a start time \(s\) and an end time \(t\), so it predicts the flow map \(\boldsymbol{u}_\theta(\boldsymbol{x}_s, s, t)\).</p> -->
+  </section>
+
+  <section class="section soft" id="results">
+    <div class="container wide-container">
+      <h2>Benchmark Results</h2>
+
+      <div class="result-carousel">
+        <button type="button" class="video-arrow" id="previous-result" aria-label="Previous results" aria-controls="result-slides"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 6 12l9 8Z"/></svg></button>
+        <div id="result-slides">
+          <div class="result-slide" data-result-slide="0">
+            <h3 class="centered subsection-title bench-title">LIBERO Simulation</h3>
+            <div class="perf-block">
+              <p class="bench-summary">Our method outperforms all few-step baselines (DMD, CTM, and iMF) and the initial student model at every denoising step in average success rate (%). FastOPD further achieves the best success rates of 81.8% with only 2 steps.</p>
+              <figure class="bench-figure perf-figure" aria-label="Success rate on LIBERO during training">
+                  <div class="perf-charts" id="perf-charts"></div>
+                  <noscript><img src="static/images/training_performance_v2.png" width="2767" height="1167" alt="Success rate on LIBERO over 10k training steps: (a) FastOPD at 1, 2, 4, and 10 sampling steps; (b) FastOPD versus DMD, iMF, and CTM at one step."></noscript>
+                  <figcaption>Success rate (%) on LIBERO during training. Hover over a chart to see the values at each training step.</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div class="result-slide" data-result-slide="1" hidden>
+            <h3 class="centered subsection-title bench-title">LIBERO Simulation</h3>
+            <div class="bench-block">
+              <div class="bench-pair">
+                  <div class="table-scroll" tabindex="0" role="region" aria-label="LIBERO simulation results">
+                    <table class="bench-table"><thead><tr><th scope="col">Method</th><th scope="col">Param.</th><th scope="col">NFE</th><th scope="col">Spatial</th><th scope="col">Object</th><th scope="col">Goal</th><th scope="col">Long</th><th scope="col">Avg.</th></tr></thead>
+                    <tbody><tr class="group-row"><th scope="colgroup" colspan="8">Diffusion/Flow-based Policies</th></tr>
+                      <tr><th scope="row" rowspan="1">DP<sup>†</sup></th><td rowspan="1">–</td><td>100</td><td>78.3</td><td>92.5</td><td>68.3</td><td>50.5</td><td>72.4</td></tr>
+                      <tr><th scope="row" rowspan="1">Octo-Base<sup>†</sup></th><td rowspan="1">93M</td><td>10</td><td>78.9</td><td>85.7</td><td>84.6</td><td>51.1</td><td>75.1</td></tr>
+                      <tr><th scope="row" rowspan="1">π<sub>0</sub><sup>†</sup></th><td rowspan="1">3.3B</td><td>10</td><td>97.4</td><td>98.4</td><td>97.6</td><td>93.0</td><td>96.6</td></tr>
+                    </tbody>
+                    <tbody><tr class="group-row"><th scope="colgroup" colspan="8">Teacher &amp; Base Student Models</th></tr>
+                      <tr><th scope="row" rowspan="1">π<sub>0.5</sub> (teacher)</th><td rowspan="1">3.3B</td><td>10</td><td>98.2</td><td>99.4</td><td>97.4</td><td>94.8</td><td>97.5</td></tr>
+                      <tr><th scope="row" rowspan="4">SmolVLA</th><td rowspan="4">450M</td><td>1</td><td>74.6</td><td>73.2</td><td>77.4</td><td>51.2</td><td>69.1</td></tr>
+                      <tr><td>2</td><td>76.8</td><td>74.4</td><td>79.8</td><td>54.4</td><td>71.4</td></tr>
+                      <tr><td>4</td><td>79.0</td><td>74.8</td><td>79.2</td><td>58.0</td><td>72.8</td></tr>
+                      <tr><td>10</td><td>77.2</td><td>75.0</td><td>79.4</td><td>54.6</td><td>71.6</td></tr>
+                    </tbody></table>
+                  </div>
+                  <div class="table-scroll" tabindex="0" role="region" aria-label="LIBERO simulation results (few-step distillation)">
+                    <table class="bench-table"><thead><tr><th scope="col">Method</th><th scope="col">Param.</th><th scope="col">NFE</th><th scope="col">Spatial</th><th scope="col">Object</th><th scope="col">Goal</th><th scope="col">Long</th><th scope="col">Avg.</th></tr></thead>
+                    <tbody><tr class="group-row"><th scope="colgroup" colspan="8">Few-step Distillation</th></tr>
+                      <tr><th scope="row" rowspan="1">DMD</th><td rowspan="1">450M</td><td>1</td><td>82.4</td><td>87.2</td><td>75.6</td><td>47.2</td><td>73.1</td></tr>
+                      <tr><th scope="row" rowspan="4">CTM</th><td rowspan="4">451M</td><td>1</td><td>78.0</td><td>86.6</td><td>70.8</td><td>41.4</td><td>69.2</td></tr>
+                      <tr><td>2</td><td>75.4</td><td>84.2</td><td>70.4</td><td>43.4</td><td>68.4</td></tr>
+                      <tr><td>4</td><td>68.4</td><td>77.0</td><td>71.2</td><td>45.0</td><td>65.4</td></tr>
+                      <tr><td>10</td><td>72.0</td><td>81.6</td><td>72.4</td><td>44.4</td><td>67.6</td></tr>
+                      <tr><th scope="row" rowspan="4">iMF</th><td rowspan="4">451M</td><td>1</td><td>70.8</td><td>78.6</td><td>75.6</td><td>30.6</td><td>63.9</td></tr>
+                      <tr><td>2</td><td>76.0</td><td>90.6</td><td>75.6</td><td>46.4</td><td>72.2</td></tr>
+                      <tr><td>4</td><td>68.2</td><td>84.8</td><td>67.0</td><td>38.0</td><td>64.5</td></tr>
+                      <tr><td>10</td><td>65.2</td><td>83.6</td><td>66.6</td><td>35.2</td><td>62.7</td></tr>
+                      <tr class="ours"><th scope="row" rowspan="4">FastOPD (Ours)</th><td rowspan="4">451M</td><td>1</td><td>84.2</td><td>94.2</td><td>82.6</td><td>48.2</td><td>77.3</td></tr>
+                      <tr class="ours"><td>2</td><td>83.6</td><td>96.8</td><td>87.2</td><td>59.6</td><td>81.8</td></tr>
+                      <tr class="ours"><td>4</td><td>83.0</td><td>95.0</td><td>85.6</td><td>57.4</td><td>80.3</td></tr>
+                      <tr class="ours"><td>10</td><td>80.4</td><td>94.0</td><td>84.4</td><td>57.2</td><td>79.0</td></tr>
+                    </tbody></table>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="result-slide" data-result-slide="2" hidden>
+            <h3 class="centered subsection-title bench-title">RoboTwin 2.0 Simulation</h3>
+            <div class="bench-block">
+              <p class="bench-summary">Our method consistently achieves performance gains in the few-step regime (1,2 steps), improving the 1 step success rate of the base student from 35.3% to 51.2%, and outperforms all few-step distillation baselines at every sampling step.</p>
+              <div class="bench-pair">
+                  <div class="table-scroll" tabindex="0" role="region" aria-label="RoboTwin 2.0 simulation results">
+                    <table class="bench-table"><thead><tr><th scope="col">Method</th><th scope="col">Param.</th><th scope="col">NFE</th><th scope="col">Clean</th><th scope="col">Randomized</th><th scope="col">Avg.</th></tr></thead>
+                    <tbody><tr class="group-row"><th scope="colgroup" colspan="6">Diffusion/Flow-based Policies</th></tr>
+                      <tr><th scope="row" rowspan="1">DP<sup>†</sup></th><td rowspan="1">0.46B</td><td>10</td><td>28.0</td><td>0.6</td><td>14.3</td></tr>
+                      <tr><th scope="row" rowspan="1">RDT<sup>†</sup></th><td rowspan="1">1.2B</td><td>10</td><td>34.5</td><td>13.7</td><td>24.1</td></tr>
+                      <tr><th scope="row" rowspan="1">π<sub>0</sub><sup>†</sup></th><td rowspan="1">3.3B</td><td>10</td><td>46.4</td><td>16.3</td><td>31.4</td></tr>
+                      <tr><th scope="row" rowspan="1">π<sub>0.5</sub></th><td rowspan="1">3.3B</td><td>10</td><td>70.7</td><td>46.0</td><td>58.4</td></tr>
+                    </tbody>
+                    <tbody><tr class="group-row"><th scope="colgroup" colspan="6">Teacher &amp; Base Student Models</th></tr>
+                      <tr><th scope="row" rowspan="1">LingBot-VLA (teacher)</th><td rowspan="1">4.2B</td><td>10</td><td>86.8</td><td>84.9</td><td>85.8</td></tr>
+                      <tr><th scope="row" rowspan="1">Fast-WAM (teacher)</th><td rowspan="1">6B</td><td>10</td><td>91.9</td><td>91.8</td><td>91.9</td></tr>
+                      <tr><th scope="row" rowspan="4">SmolVLA</th><td rowspan="4">450M</td><td>1</td><td>35.2</td><td>35.4</td><td>35.3</td></tr>
+                      <tr><td>2</td><td>55.0</td><td>56.1</td><td>55.6</td></tr>
+                      <tr><td>4</td><td>59.8</td><td>61.0</td><td>60.4</td></tr>
+                      <tr><td>10</td><td>59.4</td><td>61.3</td><td>60.4</td></tr>
+                    </tbody></table>
+                  </div>
+                  <div class="table-scroll" tabindex="0" role="region" aria-label="RoboTwin 2.0 simulation results (few-step distillation)">
+                    <table class="bench-table"><thead><tr><th scope="col">Method</th><th scope="col">Param.</th><th scope="col">NFE</th><th scope="col">Clean</th><th scope="col">Randomized</th><th scope="col">Avg.</th></tr></thead>
+                    <tbody><tr class="group-row"><th scope="colgroup" colspan="6">Few-step Distillation</th></tr>
+                      <tr><th scope="row" rowspan="1">DMD</th><td rowspan="1">450M</td><td>1</td><td>32.5</td><td>32.1</td><td>32.3</td></tr>
+                      <tr><th scope="row" rowspan="4">CTM</th><td rowspan="4">451M</td><td>1</td><td>15.5</td><td>15.6</td><td>15.6</td></tr>
+                      <tr><td>2</td><td>4.8</td><td>15.8</td><td>10.3</td></tr>
+                      <tr><td>4</td><td>18.7</td><td>16.0</td><td>17.3</td></tr>
+                      <tr><td>10</td><td>36.1</td><td>34.5</td><td>35.3</td></tr>
+                      <tr><th scope="row" rowspan="4">iMF</th><td rowspan="4">451M</td><td>1</td><td>43.2</td><td>42.4</td><td>42.8</td></tr>
+                      <tr><td>2</td><td>51.6</td><td>51.1</td><td>51.4</td></tr>
+                      <tr><td>4</td><td>50.8</td><td>51.0</td><td>50.9</td></tr>
+                      <tr><td>10</td><td>50.6</td><td>51.4</td><td>51.0</td></tr>
+                      <tr class="ours"><th scope="row" rowspan="4">FastOPD (Ours)<br><span class="teacher-note">LingBot-VLA teacher</span></th><td rowspan="4">451M</td><td>1</td><td>51.5</td><td>50.9</td><td>51.2</td></tr>
+                      <tr class="ours"><td>2</td><td>57.1</td><td>58.3</td><td>57.7</td></tr>
+                      <tr class="ours"><td>4</td><td>58.6</td><td>61.2</td><td>59.9</td></tr>
+                      <tr class="ours"><td>10</td><td>56.9</td><td>59.6</td><td>58.2</td></tr>
+                      <tr class="ours"><th scope="row" rowspan="4">FastOPD (Ours)<br><span class="teacher-note">Fast-WAM teacher</span></th><td rowspan="4">451M</td><td>1</td><td>51.1</td><td>49.8</td><td>50.5</td></tr>
+                      <tr class="ours"><td>2</td><td>55.5</td><td>57.2</td><td>56.3</td></tr>
+                      <tr class="ours"><td>4</td><td>58.5</td><td>59.2</td><td>58.8</td></tr>
+                      <tr class="ours"><td>10</td><td>58.3</td><td>59.6</td><td>58.9</td></tr>
+                    </tbody></table>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="video-arrow" id="next-result" aria-label="Next results" aria-controls="result-slides"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 9 8-9 8Z"/></svg></button>
+      </div>
+      <div class="video-dots">
+        <button type="button" class="video-dot" data-result="0" aria-label="LIBERO training curves" aria-pressed="true" aria-controls="result-slides"></button>
+        <button type="button" class="video-dot" data-result="1" aria-label="LIBERO results table" aria-pressed="false" aria-controls="result-slides"></button>
+        <button type="button" class="video-dot" data-result="2" aria-label="RoboTwin 2.0 results table" aria-pressed="false" aria-controls="result-slides"></button>
+      </div>
+      <!-- <p class="result-note">Success rates (%) on LIBERO across spatial, object, goal, and long-horizon tasks. NFE is the number of function evaluations (denoising steps). †: Results reported in the original papers.</p> -->
+      <!-- <p class="result-note">Success rates (%) on RoboTwin 2.0 under unseen clean and randomized settings. †: Results reported in the original papers.</p> -->
+
+      <h3 class="centered subsection-title">Training and inference efficiency</h3>
+      <div class="efficiency-grid">
+        <div>
+          <h4>Training efficiency</h4>
+          <p>FastOPD supervises the student at a single sampled on-policy state instead of across all denoising steps.</p>
+          <figure class="time-chart" aria-label="Training time per 1,000 iterations: standard OPD 9.51 hours, FastOPD 1.43 hours.">
+            <figcaption>Training time per 1,000 iterations (h)</figcaption>
+            <div class="time-row" title="Standard OPD: 9.51 h per 1,000 iterations"><span class="time-name">Standard OPD</span><span class="time-track"><span class="time-bar" style="width:100%"></span></span><span class="time-value" data-value="9.51">9.51 h</span></div>
+            <div class="time-row ours" title="FastOPD: 1.43 h per 1,000 iterations"><span class="time-name">FastOPD (Ours)</span><span class="time-track"><span class="time-bar" style="width:15.04%"></span></span><span class="time-value" data-value="1.43">1.43 h</span></div>
+          </figure>
+          <p>This carries over to convergence: FastOPD reaches <strong>78.2%</strong> 1 step success in just <strong>10h</strong>, while OPD needs roughly 57h to reach a similar level (79.1%), a <strong>5.7&times;</strong> speedup at a fraction of the compute.</p>
+          <figure><img src="static/images/fig1_right.png" width="980" height="738" loading="lazy" alt="Success rate versus wall-clock training time on LIBERO: FastOPD reaches 78.2% 1 step success within 10 hours, while OPD needs about 57 hours to reach 79.1%, a 5.7x speedup."></figure>
+        </div>
+        <div>
+          <h4>Inference efficiency</h4>
+          <p>The distilled student cuts latency by <strong>78%</strong> relative to π<sub>0.5</sub> on LIBERO (301 → 66 ms) and runs <strong>10&times;</strong> faster than LingBot-VLA on RoboTwin 2.0 (571 → 57 ms).</p>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Inference latency comparison">
+          <table class="bench-table latency-table"><caption>End-to-end latency on a single RTX 3090.</caption><thead><tr><th scope="col">Benchmark</th><th scope="col">Model</th><th scope="col">Steps</th><th scope="col">Latency</th></tr></thead><tbody>
+            <tr><td>LIBERO</td><td>π<sub>0.5</sub> teacher</td><td>10</td><td>301 ms</td></tr><tr class="ours"><td></td><td>FastOPD (Ours)</td><td>2</td><td>66 ms</td></tr>
+            <tr><td>RoboTwin 2.0</td><td>LingBot-VLA teacher</td><td>10</td><td>571 ms</td></tr><tr class="ours"><td> </td><td>FastOPD (Ours)</td><td>1</td><td>57 ms</td></tr>
+            <tr><td>RoboTwin 2.0</td><td>Fast-WAM teacher</td><td>10</td><td>503 ms</td></tr><tr class="ours"><td></td><td>FastOPD (Ours)</td><td>1</td><td>57 ms</td></tr>
+          </tbody></table>
+        </div>
+        </div>
+      </div>
+      <!-- <p class="result-note">FastOPD also distills a 6B Fast-WAM teacher into the same 451M student, reaching 50.5% one-step success on RoboTwin 2.0 (vs. 35.3% for the base student).</p> -->
+    </div>
+  </section>
+
+  <section class="section container" id="real-world">
+    <h2>Real-World Deployment</h2>
+    <p><strong>From MolmoAct2 (5B) to a compact student (451M) on a physical robot.</strong> FastOPD shows faster and more accurate performance than the 10 steps base student, improving the success rate from 44% to 50% while cutting the execution time from 19.32s to 17.38s.</p>
+    <!-- <p class="section-intro">From MolmoAct2 (5B) to a compact student (451M) on a physical robot.</p> -->
+    <figure class="robot-figure video-carousel" aria-label="Real-world robot videos" aria-roledescription="carousel">
+      <div class="video-stage">
+        <video id="robot-video" controls playsinline muted loop preload="metadata" aria-label="Real-world robot demonstration 1 of 4">
+          <source src="static/videos/sample1.mp4" type="video/mp4">
+          Your browser does not support embedded video. <a href="static/videos/sample1.mp4">Download the video</a>.
+        </video>
+        <button type="button" class="video-arrow" id="previous-video" aria-label="Previous video" aria-controls="robot-video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 6 12l9 8Z"/></svg></button>
+        <button type="button" class="video-arrow" id="next-video" aria-label="Next video" aria-controls="robot-video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 9 8-9 8Z"/></svg></button>
+      </div>
+      <div class="video-dots" role="group" aria-label="Choose a video">
+        <button type="button" class="video-dot" data-video="0" aria-label="Video 1 of 4" aria-pressed="true" aria-controls="robot-video"></button>
+        <button type="button" class="video-dot" data-video="1" aria-label="Video 2 of 4" aria-pressed="false" aria-controls="robot-video"></button>
+        <button type="button" class="video-dot" data-video="2" aria-label="Video 3 of 4" aria-pressed="false" aria-controls="robot-video"></button>
+        <button type="button" class="video-dot" data-video="3" aria-label="Video 4 of 4" aria-pressed="false" aria-controls="robot-video"></button>
+      </div>
+      <figcaption>Real-world robot demonstrations on the <strong>pnp-plate</strong> task. Teacher (NFE=10), Stage 1 and Stage 2 (NFE=4).</figcaption>
+    </figure>
+    <div class="real-grid">
+      <figure class="real-chart" aria-label="Real-world results on the pnp-plate task: success rate and completion time for MolmoAct2 (10 steps), SmolVLA (10 and 4 steps), and FastOPD (4 steps).">
+        <div class="rbar-panels">
+          <div class="rbar-panel">
+            <h4>(a) Success rate (%) ↑</h4>
+            <div class="rbar-plot">
+            <div class="rbar teacher" title="MolmoAct2 · 10 steps: 78.0%"><span class="rbar-value" data-value="78.0" data-digits="1">78.0%</span><span class="rbar-col" style="height:78.00%"></span><span class="rbar-name">MolmoAct2<small>10 steps</small></span></div>
+            <div class="rbar " title="SmolVLA · 10 steps: 44.0%"><span class="rbar-value" data-value="44.0" data-digits="1">44.0%</span><span class="rbar-col" style="height:44.00%"></span><span class="rbar-name">SmolVLA<small>10 steps</small></span></div>
+            <div class="rbar " title="SmolVLA · 4 steps: 42.0%"><span class="rbar-value" data-value="42.0" data-digits="1">42.0%</span><span class="rbar-col" style="height:42.00%"></span><span class="rbar-name">SmolVLA<small>4 steps</small></span></div>
+            <div class="rbar ours" title="FastOPD (Ours) · 4 steps: 50.0%"><span class="rbar-value" data-value="50.0" data-digits="1">50.0%</span><span class="rbar-col" style="height:50.00%"></span><span class="rbar-name">FastOPD (Ours)<small>4 steps</small></span></div>
+            </div>
+          </div>
+          <div class="rbar-panel">
+            <h4>(b) Completion time (s) ↓</h4>
+            <div class="rbar-plot">
+            <div class="rbar teacher" title="MolmoAct2 · 10 steps: 17.95 s"><span class="rbar-value" data-value="17.95" data-digits="2">17.95 s</span><span class="rbar-col" style="height:81.59%"></span><span class="rbar-name">MolmoAct2<small>10 steps</small></span></div>
+            <div class="rbar " title="SmolVLA · 10 steps: 19.32s"><span class="rbar-value" data-value="19.32" data-digits="2">19.32s</span><span class="rbar-col" style="height:87.82%"></span><span class="rbar-name">SmolVLA<small>10 steps</small></span></div>
+            <div class="rbar " title="SmolVLA · 4 steps: 17.20s"><span class="rbar-value" data-value="17.2" data-digits="2">17.20s</span><span class="rbar-col" style="height:78.18%"></span><span class="rbar-name">SmolVLA<small>4 steps</small></span></div>
+            <div class="rbar ours" title="FastOPD (Ours) · 4 steps: 17.38 s"><span class="rbar-value" data-value="17.38" data-digits="2">17.38 s</span><span class="rbar-col" style="height:79.00%"></span><span class="rbar-name">FastOPD (Ours)<small>4 steps</small></span></div>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <div><h3>Few-step control on a YAM robot</h3><p>Using MolmoAct2 as the teacher, the distilled student achieves <strong>50% success with 4 steps</strong>, compared with 42% for the base SmolVLA at the same step count.</p><p>Compared with the 10 steps base student, task completion time decreases from <strong>19.32s to 17.38s</strong>.</p></div>
+    </div>
+  </section>
+
+  <section class="section soft" id="bibtex"><div class="container reading-width">
+    <div class="citation-heading"><h2>BibTeX</h2></div>
+    <!-- BibTeX left empty for now. To restore: put the entry inside <pre><code id="citation">…</code></pre>
+         and add back <button type="button" class="copy-button" id="copy-citation">Copy citation</button> and <p id="copy-status" role="status"></p>.
+@misc{oh_fastopd,
+  title = {FastOPD: On-Policy Distillation for Lightweight VLA Deployment},
+  author = {Oh, Yoojin and Kim, Jeongsol and Seo, Yeonwoo and
+            Park, Jangho and Jin, Seonghyun and Park, Sunwoo and
+            Kim, Youngmin and Jun, Youngjun and Choi, Kyumin and
+            Ye, Jong Chul},
+  note = {Preprint},
+  url = {https://fastopd.github.io/}
+}
+    -->
+  </div></section>
+</main>
+<footer><div class="container reading-width"><p>FastOPD · On-Policy Distillation for Lightweight VLA Deployment</p><p>Website design adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>. Website licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p></div></footer>
+</body>
+</html>
